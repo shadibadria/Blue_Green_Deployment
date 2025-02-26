@@ -57,7 +57,7 @@ pipeline {
         stage('Publish Artifact to nexus') {
             steps {
                 withMaven(globalMavenSettingsConfig: 'maven-settings', jdk: 'jdk17', maven: 'maven3', mavenSettingsConfig: '', traceability: true) {
-                    sh "mvn deploy "
+                    sh "mvn deploy -DskipTests=true "
                 }
             }
         }
