@@ -24,3 +24,5 @@ ip-11-0-1-67.eu-west-1.compute.internal    Ready    <none>   10m   v1.31.5-eks-5
 ip-11-0-2-100.eu-west-1.compute.internal   Ready    <none>   10m   v1.31.5-eks-5d632ec
 ip-11-0-2-229.eu-west-1.compute.internal   Ready    <none>   10m   v1.31.5-eks-5d632ec
 [ec2-user@ip-11-0-1-28 ~]$
+
+- create token: 
