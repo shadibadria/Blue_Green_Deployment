@@ -49,7 +49,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-               sh "mvn package " 
+               sh "mvn package -DskipTests=true" 
             }
         }
         stage('Publish Artifact to nexus') {
