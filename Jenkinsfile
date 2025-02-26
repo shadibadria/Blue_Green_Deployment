@@ -2,6 +2,8 @@ pipeline {
     agent any
     tools {
         maven 'maven3'
+        jdk 'jdk17'
+
     }
     parameters {
         choice(name: 'DEPLOY_ENV', choices: ['blue', 'green'], description: 'Choose which environment to deploy: Blue or Green')
