@@ -88,7 +88,10 @@ pipeline {
             steps {
                 script {
                     withKubeConfig(caCertificate: '', clusterName: 'main_cluster', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://DC1024DFC96D704DC22917C152A9C59E.gr7.eu-west-1.eks.amazonaws.com') {
+                        dir('k8') {
+
                         sh "kubectl apply -f mysql-ds.yml -n ${KUBE_NAMESPACE}"  // Ensure you have the MySQL deployment YAML ready
+                        }
                     }
                 }
             }
@@ -98,11 +101,14 @@ pipeline {
             steps {
                 script {
                     withKubeConfig(caCertificate: '', clusterName: 'main_cluster', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://DC1024DFC96D704DC22917C152A9C59E.gr7.eu-west-1.eks.amazonaws.com') {
+                        dir('k8') {
+                        
                         sh """ if ! kubectl get svc bankapp-service -n ${KUBE_NAMESPACE}; then
                                 kubectl apply -f bankapp-service.yml -n ${KUBE_NAMESPACE}
                               fi
                         """
                    }
+                    }
                 }
             }
         }
@@ -110,15 +116,19 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
+                        dir('k8') {
+
                     def deploymentFile = ""
                     if (params.DEPLOY_ENV == 'blue') {
-                        deploymentFile = './k8/app-deployment-blue.yml'
+                        deploymentFile = 'app-deployment-blue.yml'
                     } else {
-                        deploymentFile = './k8/app-deployment-green.yml'
+                        deploymentFile = 'app-deployment-green.yml'
                     }
+                        
 
                     withKubeConfig(caCertificate: '', clusterName: 'main_cluster', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://DC1024DFC96D704DC22917C152A9C59E.gr7.eu-west-1.eks.amazonaws.com') {
                         sh "kubectl apply -f ${deploymentFile} -n ${KUBE_NAMESPACE}"
+                    }
                     }
                 }
             }
@@ -130,6 +140,7 @@ pipeline {
             }
             steps {
                 script {
+
                     def newEnv = params.DEPLOY_ENV
 
                     // Always switch traffic based on DEPLOY_ENV
