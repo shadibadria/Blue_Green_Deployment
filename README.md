@@ -1,5 +1,8 @@
 # Blue_Green_Deployment
 
+# Infrastructure:
+- Provider + cred 
+- 
 # Java , MySql , EKS ,Terraform
 # Zero DownTime + rollback easy
 # K8:
