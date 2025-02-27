@@ -1,34 +1,28 @@
-# Blue_Green_Deployment
-
-# Infrastructure:
-- Provider + cred 
-- 
-# Java , MySql , EKS ,Terraform
-# Zero DownTime + rollback easy
-# K8:
-- Mysql.pod -> serviec(svc) type of Cluster IP
-- App.pod -> svc type of Load Balancer
-- user -> LB -> app.pod -> cluster ip -> mysql
-- update happen when we create new enviroment and direct traffic to it 
-
-# setting up EKS cluster 
-
-# jenkins to install:
-- docker 
-
-[ec2-user@ip-11-0-1-28 ~]$ aws eks --region eu-west-1 update-kubeconfig --name main_cluster
-Added new context arn:aws:eks:eu-west-1:222634379970:cluster/main_cluster to /home/ec2-user/.kube/config
-[ec2-user@ip-11-0-1-28 ~]$ kubectl get nodes
-NAME                                       STATUS   ROLES    AGE   VERSION
-ip-11-0-1-67.eu-west-1.compute.internal    Ready    <none>   10m   v1.31.5-eks-5d632ec
-ip-11-0-2-100.eu-west-1.compute.internal   Ready    <none>   10m   v1.31.5-eks-5d632ec
-ip-11-0-2-229.eu-west-1.compute.internal   Ready    <none>   10m   v1.31.5-eks-5d632ec
-[ec2-user@ip-11-0-1-28 ~]$
-
-- create token: 
+# Full Devops project deployment to eks using blue/green deployment which mean Zero DownTime when update . 
 
 
-[ec2-user@ip-11-0-1-28 ~]$ kubectl get all -n webapps
+### About
+Java maven project deployment to EKS 
+
+### Infrastructre 
+- Terraform for managing the resources in aws .
+- AWS - VPC, Security Groups.
+- AWS - EC2.
+- Docker.
+- AWS EKS 
+- Jenkins server for ci/cd 
+- solarqube - code quality check.
+- Nexus -  artifact the package.
+- Linux + bash scripts .
+- JavaSpring Boot + mysql database.
+
+### CI/CD Process (Jenkins Pipeline):
+![screenshot](ci-cd.png)
+![screenshot](blue-green.png)
+
+### Results:
+```
+$ kubectl get all -n webapps
 NAME                                READY   STATUS    RESTARTS        AGE
 pod/bankapp-blue-6c75c748cd-659fj   1/1     Running   1 (5m55s ago)   6m20s
 pod/mysql-77b9d5d45-6pjgt           1/1     Running   0               6m22s
@@ -63,5 +57,6 @@ NAME                                       DESIRED   CURRENT   READY   AGE
 replicaset.apps/bankapp-blue-6c75c748cd    1         1         1       8m29s
 replicaset.apps/bankapp-green-646bc4d8d8   1         1         1       13s
 replicaset.apps/mysql-77b9d5d45            1         1         1       8m31s
-[ec2-user@ip-11-0-1-28 ~]$
+$
 
+```
