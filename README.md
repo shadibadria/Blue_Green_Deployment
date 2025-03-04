@@ -10,8 +10,10 @@ Java maven project deployment to EKS
 - AWS - EC2.
 - Docker.
 - AWS EKS 
-- Jenkins server for ci/cd 
+- Jenkins server for ci/cd
+- DevSecOps - travis (for the filesystem and container)
 - solarqube - code quality check.
+  - Check for code coverage(how many lines from code are tested ,  code quality checks(bugs,vulnerabilities,code smell)
 - Nexus -  artifact the package.
 - Linux + bash scripts .
 - JavaSpring Boot + mysql database.
