@@ -11,9 +11,12 @@ Java maven project deployment to EKS
 - Docker.
 - AWS EKS 
 - Jenkins server for ci/cd
-- DevSecOps - travis (for the filesystem and container)
-- solarqube - code quality check.
-  - Check for code coverage(how many lines from code are tested ,  code quality checks(bugs,vulnerabilities,code smell)
+- DevSecOps:
+  - SAST(static): for source code 
+     - solarqube - code quality check.
+        - Check for code coverage(how many lines from code are tested ,  code quality checks(bugs,vulnerabilities,code smell)
+- DAST(dynamic): for filesystem and image 
+  -  travis (for the filesystem and container)
 - Nexus -  artifact the package.
 - Linux + bash scripts .
 - JavaSpring Boot + mysql database.
